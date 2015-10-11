@@ -129,11 +129,11 @@ public class KinesisConnectorRecordProcessor<T, U> implements IRecordProcessor {
             } catch (IOException e) {
                 LOG.error(e);
             }
-        }
 
-        if (buffer.shouldFlush()) {
-            List<U> emitItems = transformToOutput(buffer.getRecords());
-            emit(checkpointer, emitItems);
+            if (buffer.shouldFlush()) {
+                List<U> emitItems = transformToOutput(buffer.getRecords());
+                emit(checkpointer, emitItems);
+            }
         }
     }
 
