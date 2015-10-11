@@ -79,7 +79,7 @@ public class RedshiftBasicEmitter extends S3Emitter {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(redshiftURL, loginProperties);
-            String s3File = getS3FileName(buffer.getFirstSequenceNumber(), buffer.getLastSequenceNumber());
+            String s3File = getFilename(buffer);
             executeStatement(generateCopyStatement(s3File), conn);
             LOG.info("Successfully copied " + getNumberOfCopiedRecords(conn)
                     + " records to Amazon Redshift from file s3://" + s3Bucket + "/" + s3File);

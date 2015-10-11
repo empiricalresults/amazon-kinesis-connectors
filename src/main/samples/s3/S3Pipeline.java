@@ -14,6 +14,8 @@
  */
 package samples.s3;
 
+import com.amazonaws.services.kinesis.connectors.s3.GzipS3Emitter;
+import com.amazonaws.services.kinesis.connectors.s3.TimestampFilenameStrategy;
 import samples.KinesisMessageModel;
 
 import com.amazonaws.services.kinesis.connectors.KinesisConnectorConfiguration;
@@ -41,7 +43,20 @@ public class S3Pipeline implements IKinesisConnectorPipeline<KinesisMessageModel
 
     @Override
     public IEmitter<byte[]> getEmitter(KinesisConnectorConfiguration configuration) {
-        return new S3Emitter(configuration);
+
+        S3Emitter emitter = new S3Emitter(configuration);
+
+        // gzip the output instead of raw data
+        // S3Emitter emitter = new GzipS3Emitter(configuration);
+
+        // if you want files to go to a specific directory in your bucket
+        // emitter.withOutputPrefix("logs/raw/")
+
+        // and finally, if you want better filenames, use a custom filename
+        // strategy
+        // emitter.withFilenameStrategy(new TimestampFilenameStrategy());
+
+        return emitter;
     }
 
     @Override

@@ -66,7 +66,7 @@ public class S3ManifestEmitter extends S3Emitter {
         if (!failed.isEmpty()) {
             return buffer.getRecords();
         }
-        String s3File = getS3FileName(buffer.getFirstSequenceNumber(), buffer.getLastSequenceNumber());
+        String s3File = getFilename(buffer);
         // wrap the name of the Amazon S3 file as the record data
         ByteBuffer data = ByteBuffer.wrap(s3File.getBytes());
         // Put the list of file names to the manifest Amazon Kinesis stream
